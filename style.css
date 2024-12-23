@@ -7,7 +7,7 @@
 
 /* Navigation Bar */
 header{
-    padding: 0 5%;
+    padding: 0 3.7rem;
     background-color: black;
 }
 .navbar{
@@ -19,13 +19,13 @@ header{
     width: 8vw;
 }
 .navhide{
-    margin-right: 10px;
+    margin-right: 1rem;
 }
 .nav-links{
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 1rem;
+    gap: 4rem;
 }
 .nav-links li{
     list-style: none;
@@ -38,7 +38,7 @@ header{
     letter-spacing: 1px;
 }
 .nav-links a:hover{
-    color: #e2266e !important;
+    color: #3da8c3 !important;
     transition: color .4s ease-in-out;
 }
 
@@ -55,7 +55,7 @@ header{
 .hamburger span{
     width: 25px;
     height: 3px;
-    background: #A64D79;
+    background: #3da8c3;
     border-radius: 5px;
     transition: all 0.3s;
 }
@@ -78,11 +78,11 @@ header{
 .hero{
     position: relative;
     background-color: black;
-    padding-top: 10px;
+    padding-top: 0.625rem;
 }
 .hero-text{
     position: absolute;
-    top: 10px;
+    top: 0.625rem;
     left: 5.2rem;
     color: #f2f3f4;
     background: none;
@@ -92,7 +92,7 @@ header{
     font-weight: 200;
 }
 .brand{
-    color: #e2266e;
+    color: #3da8c3;
     font-size: 3.5rem;
 }
 
@@ -102,21 +102,22 @@ header{
     text-align: center;
     font-size: 2rem;
     margin: 2rem 0;
+    padding: 1rem 0;
     text-transform: uppercase;
     letter-spacing: 2px;
 }
  
 .features-section {
-    padding: 20px;
+    padding: 1.25rem;
     width: 90%;
-    margin: auto;
+    margin: auto auto 3rem;
 }
  
 .features-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 20px;
+    gap: 1.25rem;
 }
  
 .feature-card {
@@ -157,9 +158,9 @@ header{
     text-align: center;
     font-size: 1.2rem;
     color: #f2f3f4;
-    background: #e2266e;
+    background: #3da8c3;
     margin: 0;
-    padding: 10px 0;
+    padding: 0.625rem 0;
     text-transform: uppercase;
     position: relative;
     z-index: 2;
@@ -169,7 +170,7 @@ header{
     bottom: -100%;
     left: 0;
     width: 100%;
-    background: #e2266e; 
+    background: #3da8c3; 
     color: #f2f3f4;
     padding: 1rem;
     text-align: center;
@@ -196,6 +197,7 @@ header{
 /* Model Slider */
 .models{
     background-color: black;
+    padding-bottom: 2rem;
 }
 .model{
     display: flex;
@@ -225,12 +227,13 @@ header{
     width: 30%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 1rem;
 }
 .text p{
     color: #f2f3f4;
     font-weight: 400;
     font-weight: 0.9rem;
+    margin-bottom: 1.5rem;
 }
 .key{
     display: flex;
@@ -246,8 +249,8 @@ header{
 .slider-container {
     position: relative;
     overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0.625rem;
+    box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
 }
 
 .slider-wrapper {
@@ -273,9 +276,9 @@ header{
 .slider-dots label {
     width: 15px;
     height: 15px;
-    margin: 0 5px;
+    margin: 0 0.31rem;
     border-radius: 50%;
-    background-color: #e2266e;
+    background-color: #3da8c3;
     cursor: pointer;
 }
 
@@ -297,7 +300,7 @@ header{
 }
 
 .slider-dots input:checked + label {
-    background-color: #e2266ebd;
+    background-color: #3da8c3;
 } 
   
 /* End */
@@ -305,12 +308,13 @@ header{
 /* Peoples */
 .testimonials {
     text-align: center;
-    margin: 2rem 2rem;
+    margin: 3rem 2rem 0;
+    padding: 2rem 0;
   }
 
   .testimonials h2 {
     font-size: 2rem;
-    margin-bottom: 20px;
+    margin-bottom: 1.25rem;
   }
 
   .testimonial-container {
@@ -319,17 +323,17 @@ header{
     gap: 2rem;
     justify-content: space-between;
     margin: 2rem 3rem;
-    padding: 10px;
+    padding: 2rem;
   }
 
   .testimonial {
     position: relative;
     background-color: white;
     border: 1px solid #ddd;
-    border-radius: 10px;
+    border-radius: 0.625rem;
     width: 300px;
-    padding: 20px;
-    padding-top: 40px;
+    padding: 1.25rem;
+    padding-top: 2.5rem;
     text-align: center;
     transition: background-color 0.3s ease;
   }
@@ -339,7 +343,7 @@ header{
   }
   .testimonial:hover{
     color: #f4f4f4;
-    background-color: #e2266e;
+    background-color: #3da8c3;
   }
   .testimonial:hover >p{
     color: #f4f4f4;
@@ -359,7 +363,7 @@ header{
 
   .testimonial h3 {
     font-size: 1.2rem;
-    margin: 20px 0 10px;
+    margin: 1.25rem 0 0.625rem;
   }
 
   .testimonial p {
@@ -372,37 +376,34 @@ header{
   .contact-container {
     display: flex;
     align-items: center;
+    justify-content: center;
     background-color: black;
-    padding: 20px 3rem;
+    padding: 3rem 3rem 0 3rem;
+    width: 100%;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
   }
-  .contact-container img {
-    max-width: 250px;
-    max-height: 250px;
-    margin: 0 20px;
-    border-radius: 10px;
-  }
+
   .contact-form {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    margin: 0px 3rem 0 3rem;
+    width: 50%;
+    margin: 1rem 3rem 0 3rem;
   }
   .contact-form h1{
     color: #f2f3f4;
     font-size: 2rem;
   }
   .contact-form label {
-    margin-bottom: 5px;
+    margin-bottom: 0.31rem;
     font-size: 14px;
   }
   .contact-form input, .contact-form textarea {
     background: transparent;
     border: none;
-    border-bottom: 2px solid #e2266e;
+    border-bottom: 2px solid #3da8c3;
     color: #fff;
-    margin-bottom: 15px;
-    padding: 10px;
+    margin-bottom: 0.937rem;
+    padding: 0.625rem;
     font-size: 0.9rem;
     outline: none;
   }
@@ -414,24 +415,26 @@ header{
     height: 100px;
   }
   .contact-form button {
-    background-color: #e2266e;
+    background-color: #3da8c3;
     border: none;
     color: #fff;
-    padding: 10px 15px;
+    padding: 0.625rem 0.937rem;
     font-size: 0.9rem;
     cursor: pointer;
     border-radius: 5px;
     transition: 0.3s;
+    width: 20%;
+    margin-top: 1.5rem;
   }
   .contact-form button:hover {
-    background-color: #a91a52;
+    background-color: #3da8c3;
   }
  
   /* footer */
   footer {
     background-color: black;
     color: #f2f3f4;
-    padding: 20px 2rem;
+    padding: 1.25rem 2rem;
 
   }
    
@@ -448,7 +451,7 @@ header{
   }
    
   .footer-logo p {
-    margin-top: 10px;
+    margin-top: 0.625rem;
     font-size: 0.9rem;
     color: #f2f3f4;
   }
@@ -460,33 +463,33 @@ header{
   }
    
   .footer-address p, .footer-about p {
-    margin-bottom: 10px;
+    margin-bottom: 0.625rem;
     font-size: 0.9em;
   }
    
   .footer-socials {
-    margin-top: 20px;
+    margin-top: 1.25rem;
   }
    
   .footer-socials .social-icon {
     text-decoration: none;
     color: #f4f4f4;
-    margin-right: 10px;
+    margin-right: 0.625rem;
     font-size: 1.5em;
     transition: color 0.3s ease;
   }
    
   .footer-socials .social-icon:hover {
-    color: #e2266e;
+    color: #3da8c3;
   }
 
 /* Responsive Design */
-@media screen and (max-width: 971px){
+@media (max-width: 971px){
     .hero-text{
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
+        gap: 0.625rem;
         text-align: center;
         left: 3.5rem;
     }
@@ -503,12 +506,12 @@ header{
 }
 
 
-@media screen and  (max-width: 770px) {
+@media (max-width: 770px) {
     .hero-text h1{
         font-size: 2rem;
     }
     .model{
-        padding: 10px;
+        padding: 0.625rem;
         height: 100%;
     }
     .detail{
@@ -532,19 +535,11 @@ header{
         text-align: center;
       }
       .footer-address, .footer-about {
-        margin-top: 20px;
+        margin-top: 1.25rem;
       }
 }
-@media   screen and (max-width:345px){
-    .hero-text h1{
-        font-size: 1.5rem !important;
-    }
-    .slider-dots{
-        bottom: 6rem;
-    }
-}
-  
-@media   screen and (max-width:480px){
+
+@media screen and (min-width: 481px) and (max-width: 575px) {
     .nav-links ul{
         display: none;
     }
@@ -574,7 +569,49 @@ header{
     .nav-links{
         display: flex;
         flex-direction: column;
-        gap: 15px;
+        gap: 0.937rem;
+    }
+    .hamburger{
+        display: flex;
+    }
+    .contact-form button{
+        width: 50%;
+        padding: 0.625rem 0.937rem;
+    }
+
+}
+  
+@media   (max-width:480px){
+    .nav-links ul{
+        display: none;
+    }
+    /*********** Navbar ************/
+    .navhide{
+        display: none;
+        flex-direction: column;
+        gap: 1rem;
+        position: absolute;
+        background-color: #fff;
+        
+        padding: 1rem 5rem;
+        box-shadow: 0 60px 80px rgba(0,0,0,0.60), 0 45px 26px rgba(0,0,0,0.14);
+        border-radius: 5px;
+        top: 2rem;
+        z-index: 5;
+    }
+    .nav-links li a{
+        color: black;
+    }
+    .navbar{
+        justify-content: space-between;
+    }
+    #menu-toggle:checked + .hamburger + .navhide{
+        display: flex;
+    }
+    .nav-links{
+        display: flex;
+        flex-direction: column;
+        gap: 0.937rem;
     }
     .hamburger{
         display: flex;
@@ -591,7 +628,21 @@ header{
         font-size: 1.8rem;
     }
     .testimonial-container{
-        margin: 10px;
-        padding-top: 20px;
+        margin: 0.625rem;
+        padding-top: 1.25rem;
+    }
+    .contact-container{
+        padding: 0.2rem;
+    }
+    .contact-form button{
+        width: 100%;
+    }
+}
+@media  (max-width:345px){
+    .hero-text h1{
+        font-size: 1.5rem !important;
+    }
+    .slider-dots{
+        bottom: 6rem;
     }
 }
