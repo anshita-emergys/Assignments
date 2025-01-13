@@ -1,0 +1,457 @@
+:root {
+    --personal: #A31D1D;
+    --business: #000;
+    --social:#cb9d5d;
+    --other:#96CEB4;
+    --light: #EEE;
+    --grey: #888;
+    --dark: #313154;
+    --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --business-glow: 0px 0px 4px #000;
+    --personal-glow: 0px 0px 4px #A31D1D;
+    --social-glow: 0px 0px 4px #cb9d5d;
+    --other-glow: 0px 0px 4px #96CEB4;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'montserrat', sans-serif;
+}
+
+input:not([type="radio"]):not([type="checkbox"]),
+button {
+    appearance: none;
+    border: none;
+    outline: none;
+    background: none;
+    cursor: initial;
+}
+
+body {
+    background: var(--light);
+    color: var(--dark);
+}
+
+section {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.greeting {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    margin: 0;
+    padding: 2rem;
+    background: rgb(163, 29, 29);
+    background: linear-gradient(90deg, rgba(163, 29, 29, 1) 7%, rgba(109, 35, 35, 1) 53%, rgba(41, 40, 40, 1) 100%);
+}
+
+h3 {
+    color: var(--dark);
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+h4 {
+    color: var(--grey);
+    font-size: 0.875rem;
+    font-weight: 700;
+}
+
+.container{
+    margin: 0 6%;
+}
+
+.greeting .title {
+    display: flex;
+}
+
+.greeting .title input {
+    margin-left: 0.5rem;
+    flex: 1 1 0%;
+    min-width: 0;
+}
+.title input{
+    background-color: none;
+}
+
+.greeting .title,
+.greeting .title input {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.red-star{
+    color: var(--personal);
+}
+
+.cont {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+.columns {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+/* create container  */
+.create-todo{
+    margin-bottom: 0;
+}
+
+.create-todo h3{
+    margin-top: 0.625rem;
+}
+
+.create-todo h4{
+    margin: 1rem 0 0.5rem 0;
+}
+
+.create-todo input[type="text"] {
+    display: block;
+    width: 100%;
+    padding: 1rem 1.5rem;
+    color: var(--dark);
+    background-color: #FFF;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 0.625rem;
+}
+
+#description{
+    display: block;
+    width: 100%;
+    height: 80px;
+    padding: 1rem 1.5rem;
+    color: var(--dark);
+    background-color: #FFF;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 0.625rem;
+    border: none;
+    outline: none;
+}
+
+.create-todo .options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.create-todo .options label {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #FFF;
+    padding: 0.8rem 1rem;
+    box-shadow: var(--shadow);
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+    display: none;
+}
+
+.bubble {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid var(--business);
+    box-shadow: var(--business-glow);
+}
+
+.bubble.personal {
+    border-color: var(--personal);
+    box-shadow: var(--personal-glow);
+}
+
+.bubble.social {
+    border-color: var(--social);
+    box-shadow: var(--social-glow);
+}
+
+.bubble.other {
+    border-color: var(--other);
+    box-shadow: var(--other-glow);
+}
+
+.bubble::after {
+    content: '';
+    display: block;
+    opacity: 0;
+    width: 0px;
+    height: 0px;
+    background-color: var(--business);
+    box-shadow: var(--business-glow);
+    border-radius: 50%;
+    transition: 0.2s ease-in-out;
+}
+
+.bubble.personal::after {
+    background-color: var(--personal);
+    box-shadow: var(--personal-glow);
+}
+
+.bubble.social::after {
+    background-color: var(--social);
+    box-shadow: var(--social-glow);
+}
+
+.bubble.other::after {
+    background-color: var(--other);
+    box-shadow: var(--other-glow);
+}
+
+input:checked~.bubble::after {
+    width: 6px;
+    height: 6px;
+    opacity: 1;
+}
+
+.create-todo .options label div {
+    color: var(--dark);
+    font-size: 0.9rem;
+    /* margin-top: 1rem; */
+}
+
+.create-todo input[type="submit"] {
+    display: block;
+    width: 48%;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    color: #FFF;
+    font-weight: 700;
+    text-transform: uppercase;
+    background-color: var(--personal);
+    box-shadow: var(--personal-glow);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: 0.2s ease-out;
+}
+
+.create-todo input[type="submit"]:hover {
+    opacity: 0.75;
+}
+
+/* tasks column  */
+.column{
+    background-color: #FFF;
+    padding: 0 1rem 1rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+    height: 365px;
+}
+.list{
+    overflow-y: auto;
+    height: 310px;
+    overflow-x: hidden;
+}
+
+.list-heading{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    margin-top: 0.312rem;
+}
+
+.no-tasks{
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.list-heading button{
+    background-color: var(--personal);
+    display: block;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    color: #FFF;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+.aside{
+    margin-top: 2rem;
+}
+
+.columns h4{
+    padding: 1rem 0 0.5rem 1rem ;
+}
+
+/* New task */
+
+.todo-list .todo-item {
+    display: flex;
+    align-items:flex-start;
+    background-color: #FFF;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 1rem;
+}
+.todo-item label {
+    display: block;
+    margin-right: 1rem;
+    margin-top: 0.7rem;
+    cursor: pointer;
+}
+
+.todo-item .todo-content {
+    flex: 1 1 0%;
+}
+
+.todo-content{
+    min-width: 0;
+}
+
+.todo-item .todo-content input {
+    color: var(--dark);
+    font-size: 1rem;
+    width: 100%;
+}
+.todo-content input{
+    font-weight: 700;
+    overflow-wrap: break-word;
+    white-space: normal;
+    word-wrap: break-word;
+}
+.task-description{
+    color: var(--grey);
+    font-size: 0.8rem;
+    width: 100%;
+}
+
+.task-description{
+    white-space: pre-wrap;
+    word-wrap: break-word; 
+}
+
+.todo-item .actions {
+    display: flex;
+    align-items: center;
+}
+
+.todo-item .actions button {
+    display: block;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    color: #FFF;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+.todo-item .actions button:hover {
+    opacity: 0.75;
+}
+
+.todo-item .actions .edit {
+    margin-right: 0.5rem;
+    background-color: var(--personal);
+}
+
+.todo-item .actions .delete {
+    background-color: var(--personal);
+}
+
+.todo-item.done .todo-content input {
+    /* text-decoration: line-through; */
+    color: var(--grey);
+}
+
+
+.star {
+    display: inline-block;
+    font-size: 1.25rem;
+    cursor: pointer;
+    color: #a9a8a8d8;
+    transition: color 0.2s ease-in-out;
+    margin: 0 1rem;
+}
+
+.star.filled {
+    color: var(--personal);
+}
+
+.star.filled.business {
+    color: var(--business);
+}
+.star.filled.social{
+    color: var(--social);
+}
+.star.filled.other{
+    color: var(--other);
+}
+
+/* Animation */
+@keyframes slideRight {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+}
+
+@keyframes slideLeft {
+    0% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+}
+
+.todo-item.slide-right {
+    animation: slideRight 0.5s ease-in-out forwards;
+}
+
+.todo-item.slide-left {
+    animation: slideLeft 0.5s ease-in-out forwards;
+}
+
+
+@media screen and (min-width: 600px) and (max-width: 996px) {
+    .create-todo input[type="submit"]{
+        width: 50%;
+        font-size: 0.9rem;
+    }
+}
+
+
+@media screen and (max-width: 774px){
+    .cont{
+        display: flex;
+        flex-direction: column;
+    }
+    .columns{
+        display: flex;
+        flex-direction: column;
+
+    }
+    section{
+        padding: 0;
+    }
+    .title{
+        flex-direction: column;
+        width: 100%;
+    }
+}
