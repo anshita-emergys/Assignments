@@ -13,78 +13,117 @@
 </head>
 
 <body>
-    
-        <section class="greeting">
-            <h2 class="title container">
-                What's up, <input type="text" id="name" placeholder="Name here" />
-            </h2>
+
+    <section class="greeting">
+        <h2 class="title container">
+            What's up, <input type="text" id="name" placeholder="Name here" />
+        </h2>
+    </section>
+
+    <div class="cont container">
+
+        <section class="create-todo">
+            <h3>CREATE A TODO</h3>
+            <form id="new-todo-form">
+                <h4>What's on your todo? <span class="red-star">*</span>
+                </h4>
+                <input type="text" maxlength="12" placeholder="e.g. Get some milk" name="content" id="content" />
+
+                <div id="warning" style="color: #A31D1D; display: none;">Please enter a task!</div>
+
+
+                <h4>Add description</h4>
+                <textarea id="description" maxlength="80" placeholder="Enter task description"></textarea>
+
+                <h4>Pick a category <span class="red-star">*</span></h4>
+                <div class="options">
+                    <label>
+                        <input type="radio" name="category" id="category1" value="business" />
+                        <span class="bubble business"></span>
+                        <div>Business</div>
+                    </label>
+                    <label>
+                        <input type="radio" name="category" id="category2" value="personal" />
+                        <span class="bubble personal"></span>
+                        <div>Personal</div>
+                    </label>
+                    <label>
+                        <input type="radio" name="category" value="social" />
+                        <span class="bubble social"></span>
+                        <div>Social</div>
+                    </label>
+                    <label>
+                        <input type="radio" name="category" value="other" />
+                        <span class="bubble other"></span>
+                        <div>Other</div>
+                    </label>
+                </div>
+                <div id="date-submit">
+                    <input type="date" id="date" name="date" />
+                    <input type="submit" value="Add todo" />
+                </div>
+
+            </form>
         </section>
 
-        <div class="cont container">
-            
-            <section class="create-todo">
-                <h3>CREATE A TODO</h3>
-                <form id="new-todo-form">
-                    <h4>What's on your todo? <span class="red-star">*</span>
-                    </h4>
-                    <input type="text" maxlength="12" placeholder="e.g. Get some milk" name="content" id="content"/>
-
-                    <div id="warning" style="color: #A31D1D; display: none;">Please enter a task!</div>
-
-
-                    <h4>Add description</h4>
-                    <textarea id="description" maxlength="80" placeholder="Enter task description"></textarea>
-
-                    <h4>Pick a category <span class="red-star">*</span></h4>
-                    <div class="options">
-                        <label>
-                            <input type="radio" name="category" id="category1" value="business" />
-                            <span class="bubble business"></span>
-                            <div>Business</div>
-                        </label>
-                        <label>
-                            <input type="radio" name="category" id="category2" value="personal" />
-                            <span class="bubble personal"></span>
-                            <div>Personal</div>
-                        </label>
-                        <label>
-                            <input type="radio" name="category" value="social" />
-                            <span class="bubble social"></span>
-                            <div>Social</div>
-                        </label>
-                        <label>
-                            <input type="radio" name="category" value="other" />
-                            <span class="bubble other"></span>
-                            <div>Other</div>
-                        </label>
-                    </div>
-                    <input type="submit" value="Add todo" />
-                </form>
-            </section>
-          
-
-            
-            <section class="todo-list">
-                <div class="list-heading">
-                    <h3>TODO LIST</h3>
+        <section class="todo-list">
+            <div class="list-heading">
+                <h3>TODO LIST</h3>
+                <div class="sort-clear">
+                    <input type="search" id="search-input" placeholder="Search todos...">
+                    <select id="sort-dropdown">
+                        <option value="default">Default</option>
+                        <option value="a-z">A - Z</option>
+                        <option value="z-a">Z - A</option>
+                        <option value="date">Oldest</option>
+                    </select>
                     <button id="clear-all">Clear All</button>
                 </div>
-                <div class="aside">
-                    <div class="columns">
+            </div>
+            <div class="aside">
+                <div class="columns">
 
-                        <div class="column pending-column">
-                            <h4>Pending</h4>
-                            <div class="list" id="pending-list"></div>
-                        </div>
-                        <div class="column completed-column">
-                            <h4>Completed</h4>
-                            <div class="list" id="completed-list"></div>
-                        </div>
+                    <div class="column pending-column">
+                        <h4>Pending</h4>
+                        <div class="list" id="pending-list"></div>
+                    </div>
+                    <div class="column completed-column">
+                        <h4>Completed</h4>
+                        <div class="list" id="completed-list"></div>
                     </div>
                 </div>
-            </section>
-         
+            </div>
+        </section>
+
+        <div id="task-popup" class="popup">
+            <div class="pop-container">
+                <img src="./graphic.png" alt="">
+
+                <div class="detail-container">
+                    <span id="close-pop" class="close">&times;</span>
+                    <h3>Task Details</h3>
+                    <p>
+                        The task titled "<span id="pop-title"></span>" includes a description specifying <span
+                            id="pop-des"></span>. It falls under the <span id="pop-category"></span> category and is
+                        assigned due date of <span id="pop-date"></span>.The current status of the task is <span
+                            id="pop-status"></span>
+                    </p>
+                </div>
+            </div>
         </div>
+
+        <div id="confirm-popup">
+            <div class="confirm-container">
+                <h5>Are you sure you want clear all tasks ?</h5>
+                <div id="confirm-action">
+                    <button id="confirm-ok">Ok</button>
+                    <button id="confirm-cancel">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
 
     <script src="script.js"></script>
 </body>
