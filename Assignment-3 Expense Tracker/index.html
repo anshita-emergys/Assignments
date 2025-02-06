@@ -21,7 +21,7 @@
   </header>
   <div id="create">
     <form id="create-transaction">
-      <button id="close">&times;</button>
+      <button type="button" id="close">&times;</button>
       <img src="./shared image.jfif" alt="">
       <div class="info-container">
         <div class="type-options">
@@ -93,7 +93,8 @@
         <div class="numbers">
           <div class="number-detail">
             <h4>Transaction Amount</h4>
-            <input type="number" step="0.01" min="1" max="9999999" id="amount" placeholder="e.g. 500" required>
+            <input type="number" step="0.01" min="1" max="9999999" id="amount" placeholder="e.g. 500"
+              onkeydown="return event.keyCode !== 69 && event.keyCode !== 189" required>
           </div>
           <div class="number-detail">
             <h4>Transaction Date</h4>
@@ -136,24 +137,28 @@
         <div class="search-h">
           <h3>Transactions</h3>
           <input type="search" id="search-input" placeholder="Search...">
+
         </div>
         <div id="transactions-grid" data-placeholder="No transactions">
           <div class="transaction-heading">
             <div class="transaction-content">Name
             </div>
             <div class="transaction-date">Date
-              <select id="date-dropdown">
-                <option value="default"></option>
-                <option value="newest">Newest</option>
-                <option value="oldest">Oldest</option>
-            </select>
+                <!-- <select id="date-dropdown">
+                  <option value="default"></option>
+                  <option value="newest">Newest</option>
+                  <option value="oldest">Oldest</option>
+                </select> -->
+                <span id="icon-span"><i class="fa-solid fa-sort"></i></span>
+
             </div>
             <div class="transaction-amount">Amount
-              <select id="amount-dropdown">
+              <!-- <select id="amount-dropdown">
                 <option value="default"></option>
                 <option value="highest">Highest</option>
                 <option value="lowest">Lowest</option>
-            </select>
+              </select> -->
+              <span id="icon-amount"><i class="fa-solid fa-sort"></i></span>
             </div>
           </div>
           <div id="list-container">
@@ -174,8 +179,7 @@
   </div>
 
   <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
-  <script
-  src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
   </script>
   <script src="./script.js"></script>
 </body>

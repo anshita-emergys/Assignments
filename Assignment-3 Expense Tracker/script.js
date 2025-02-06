@@ -7,6 +7,9 @@ const close = document.getElementById('close');
 const create = document.getElementById('create');
 let categoryContainer = document.querySelector('.expensecat');
 let incomeOptions = document.querySelector('.incomecat');
+let totalBalance = 0;
+let totalIncome = 0;
+let totalExpense = 0;
 
 button.addEventListener('click', function () {
     create.style.display = 'flex';
@@ -42,68 +45,157 @@ function isDuplicate(content) {
     return transactions.some(transaction => transaction.content.toLowerCase() === content.toLowerCase());
 }
 
-function sortT() {
-    const sortByAmount = document.getElementById('amount-dropdown').value;
-    const sortByDate = document.getElementById('date-dropdown').value;
+// click sort start 
+let defaultTransaction = [...transactions];
+let dateOrder = 0;
+const iconDate = document.getElementById('icon-span');
+let amountOrder = 0;
+const icon = document.getElementById('icon-amount');
 
-    document.getElementById('date-dropdown').value = 'default';
-    document.getElementById('amount-dropdown').value = 'default';
-    if(sortByAmount !== 'default'){
-        if (sortByAmount === 'highest') {
-            transactions.sort((a, b) => {
-                a = parseFloat(a.amount);
-                b= parseFloat(b.amount);
-                console.log(a);
-                console.log(b);
-                
-                if (a < b) return 1;
-                if (a > b) return -1;
-                return 0;
-            });
-        } else if (sortByAmount === 'lowest') {
-            transactions.sort((a, b) => {
-                a = parseFloat(a.amount);
-                b= parseFloat(b.amount);
-                if (a < b) return -1;
-                if (a > b) return 1;
-                return 0;
-            });
-        }
+function sortByDate() {
+    amountOrder =0;
+    icon.innerHTML = '<i class="fa-solid fa-sort"></i>';
+    transactions = [...defaultTransaction];
+    if (dateOrder === 0) {
+        transactions.sort((a, b) => {
+            if (a.date < b.date) return 1;
+            if (a.date > b.date) return -1;
+        });
+        dateOrder = 1;
+        iconDate.innerHTML = '<i class="fa-solid fa-sort-up"></i>';
+        console.log('high-sorted');
     }
-
-    if(sortByDate !== 'default'){
-        if (sortByDate === 'newest') {
-            transactions.sort((a, b) => {
-                if (a.date < b.date) return 1;
-                if (a.date > b.date) return -1;
-                return 0;
-            });
-        } else if (sortByDate === 'oldest') {
-            transactions.sort((a, b) => {
-                if (a.date < b.date) return -1;
-                if (a.date > b.date) return 1;
-                return 0;
-            });
-        }
+    else if (dateOrder === 1) {
+        transactions.sort((a, b) => {
+            if (a.date < b.date) return -1;
+            if (a.date > b.date) return 1;
+        });
+        dateOrder = 2;
+        console.log('low-sorted');
+        iconDate.innerHTML = '<i class="fa-solid fa-sort-down"></i>';
+    } else {
+        transactions = [...defaultTransaction];
+        dateOrder = 0;
+        iconDate.innerHTML = '<i class="fa-solid fa-sort"></i>';
     }
-
     render();
 }
 
-document.getElementById('amount-dropdown').addEventListener('change', sortT);
-document.getElementById('date-dropdown').addEventListener('change', sortT);
+function sortByAmount() {
+    dateOrder =0;
+    iconDate.innerHTML = '<i class="fa-solid fa-sort"></i>';
+    transactions = [...defaultTransaction];
+    if (amountOrder === 0) {
+        transactions.sort((a, b) => {
+            a = parseFloat(a.amount);
+            b = parseFloat(b.amount);
+            console.log(a);
+            console.log(b);
 
-document.getElementById('search-input').addEventListener('input',()=>{
+            if (a < b) return 1;
+            if (a > b) return -1;
+            return 0;
+        });
+        amountOrder = 1;
+        icon.innerHTML = '<i class="fa-solid fa-sort-up"></i>';
+    }
+    else if (amountOrder === 1) {
+        transactions.sort((a, b) => {
+            a = parseFloat(a.amount);
+            b = parseFloat(b.amount);
+            if (a < b) return -1;
+            if (a > b) return 1;
+            return 0;
+        });
+        amountOrder =2;
+        icon.innerHTML = '<i class="fa-solid fa-sort-down"></i>';
+    }else
+    {
+        transactions = [...defaultTransaction];
+        amountOrder = 0;
+        icon.innerHTML = '<i class="fa-solid fa-sort"></i>';
+    }
+    render();
+}
+document.getElementById('icon-span').addEventListener('click', sortByDate);
+document.getElementById('icon-amount').addEventListener('click', sortByAmount);
+// click sort end 
+
+// function sortT() {
+//     const sortByAmount = document.getElementById('amount-dropdown').value;
+//     const sortByDate = document.getElementById('date-dropdown').value;
+//     const icon = document.getElementById('icon-span');
+
+//     document.getElementById('date-dropdown').value = 'default';
+//     document.getElementById('amount-dropdown').value = 'default';
+
+//     if (sortByAmount !== 'default') {
+//         if (sortByAmount === 'highest') {
+//             transactions.sort((a, b) => {
+//                 a = parseFloat(a.amount);
+//                 b = parseFloat(b.amount);
+//                 console.log(a);
+//                 console.log(b);
+
+//                 if (a < b) return 1;
+//                 if (a > b) return -1;
+//                 return 0;
+//             });
+//         } else if (sortByAmount === 'lowest') {
+//             transactions.sort((a, b) => {
+//                 a = parseFloat(a.amount);
+//                 b = parseFloat(b.amount);
+//                 if (a < b) return -1;
+//                 if (a > b) return 1;
+//                 return 0;
+//             });
+//         }
+//     }
+
+//     if (sortByDate !== 'default') {
+//         if (sortByDate === 'newest') {
+//             transactions.sort((a, b) => {
+//                 if (a.date < b.date) return 1;
+//                 if (a.date > b.date) return -1;
+//                 return 0;
+//             });
+//         } else if (sortByDate === 'oldest') {
+//             transactions.sort((a, b) => {
+//                 if (a.date < b.date) return -1;
+//                 if (a.date > b.date) return 1;
+//                 return 0;
+//             });
+//         }
+//     }
+
+//     render();
+// }
+// document.getElementById('amount-dropdown').addEventListener('change', sortT);
+// document.getElementById('date-dropdown').addEventListener('change', sortT);
+
+document.getElementById('search-input').addEventListener('input', () => {
+    iconDate.removeEventListener('click',sortByDate);
+    icon.removeEventListener('click',sortByAmount);
+
     const search = document.getElementById('search-input').value.toLowerCase();
     const filteredTransactions = transactions.filter((transaction) => {
         return transaction.content.toLowerCase().includes(search) || transaction.category.toLowerCase().includes(search) || transaction.date.toLowerCase().includes(search) || transaction.amount.toLowerCase().includes(search);
-        });
-        render(filteredTransactions);
-})
+    });
+    render(filteredTransactions);
+});
+
+document.getElementById('search-input').addEventListener('blur',()=>{
+    const search = document.getElementById('search-input').value.toLowerCase();
+    if(search === ""){
+        iconDate.addEventListener('click',sortByDate);
+        icon.addEventListener('click',sortByAmount);
+    }
+});
 
 document.getElementById("create-transaction").addEventListener('submit', function (e) {
     e.preventDefault();
-    const content = document.getElementById('content').value;
+    let content = document.getElementById('content').value;
+    content = content.trim();
     const date = document.getElementById('date').value;
     const type = document.querySelector('input[name="type"]:checked').value;
     const amount = document.getElementById('amount').value;
@@ -130,7 +222,16 @@ document.getElementById("create-transaction").addEventListener('submit', functio
     if (category === null) {
         nameError.textContent = "";
         categoryError.textContent = "Category is required*";
-        return
+        return;
+    }
+    // console.log(typeRadio[0]);
+    const check = totalBalance-amount;
+    if ((totalIncome <= amount || check <= 0) && typeRadio[0].checked == true) {
+        nameError.textContent = "Please enter income first";
+        typeRadio[1].checked = true;
+        categoryContainer.style.display = 'none';
+        incomeOptions.style.display = 'flex';
+        return;
     }
     category = category.value;
     nameError.textContent = "";
@@ -195,9 +296,9 @@ function createTransaction(transaction) {
         const transactionIndex = transactions.findIndex(t => t === transaction);
         transactions.splice(transactionIndex, 1);
         localStorage.setItem('transactions', JSON.stringify(transactions));
+        cardValues();
         render();
         chartValues();
-        cardValues();
     })
     const inputElement = tr.querySelector('textarea');
     inputElement.addEventListener('blur', (e) => {
@@ -236,9 +337,9 @@ function cardValues() {
     const incomeElement = document.getElementById('income');
     const expenseElement = document.getElementById('expense');
 
-    let totalBalance = 0;
-    let totalIncome = 0;
-    let totalExpense = 0;
+    totalBalance = 0;
+    totalIncome = 0;
+    totalExpense = 0;
 
     transactions.forEach(transaction => {
         if (transaction.type === 'income') {
@@ -330,57 +431,53 @@ function chartValues() {
             }
         }
     });
-
-    const bar = document.getElementById('bar-chart').getContext('2d');
-    new Chart(bar, {
-            type: 'horizontalBar',
-            data: chartData,
-            options: {
-                title: {
-                    display: true,
-                    text: 'Income by Category',
-                    fontColor: "#261d57"
-                },
-                scales: {
-                    xAxes: [{
-                        ticks: {
-                            beginAtZero: true,
-                            fontColor: "#261d57"
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            fontColor: '#261d57'
-                        }
-                    }]
-                },
-                legend: {
-                    display: false
-                }
-            }
-        });
-    
-
-    const dough = document.getElementById('dough-chart').getContext('2d');
-    new Chart(dough, {
-            type: 'doughnut',
-            data: doughnutData,
-            options: {
-                title: {
-                    display: true,
-                    text: 'Expense by Category',
-                    fontColor: "#261d57"
-                },
-                cutoutPercentage: 60,
-                legend: {
-                    position: 'right',
-                    labels: {
-                        boxWidth: 30,
-                        fontSize: 12,
+    new Chart('bar-chart', {
+        type: 'horizontalBar',
+        data: chartData,
+        options: {
+            title: {
+                display: true,
+                text: 'Income by Category',
+                fontColor: "#261d57"
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        fontColor: "#261d57"
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
                         fontColor: '#261d57'
                     }
+                }]
+            },
+            legend: {
+                display: false
+            }
+        }
+    });
+
+    new Chart('dough-chart', {
+        type: 'doughnut',
+        data: doughnutData,
+        options: {
+            title: {
+                display: true,
+                text: 'Expense by Category',
+                fontColor: "#261d57"
+            },
+            cutoutPercentage: 60,
+            legend: {
+                position: 'right',
+                labels: {
+                    boxWidth: 30,
+                    fontSize: 12,
+                    fontColor: '#261d57'
                 }
             }
-        });
+        }
+    });
 }
-chartValues();
+chartValues()

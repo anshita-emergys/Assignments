@@ -195,6 +195,26 @@ textarea{
 input[type="radio"] {
     display: none;
 }
+/* select {
+    appearance:none;
+    width: 20px;
+    position: absolute;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+.transaction-date{
+    position: relative;
+}
+.transaction-date i{
+    position: absolute;
+    cursor: pointer;
+    left: 2rem;
+} */
+#icon-amount, #icon-span{
+    cursor: pointer;
+}
+
 .info-container h4{
     display: flex;
     justify-content: space-between;
@@ -460,14 +480,6 @@ aside{
     border-radius: 0.5rem;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 10px 10px 20px;
-}
-
-select{
-    width: 15px;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    color: var(--dark);
 }
 
 .transaction-heading .transaction-content{
