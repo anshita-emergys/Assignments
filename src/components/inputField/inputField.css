@@ -1,0 +1,26 @@
+.input-group input {
+    width: 100%;
+    padding: 0.59rem 0.65rem;
+    border-radius: 0.35rem;
+    outline: none;
+    appearance: none;
+    border: 1px solid var(--darkGrey);
+    transition: 0.3s ease-in-out;
+  }
+  .input-group input:focus {
+    border: 1px solid var(--primary);
+  }
+  .input-group label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--secondary);
+  }
+  .auth-error {
+    height: 0.3rem;
+    color: red;
+    font-size: 0.6rem;
+    font-weight: 400;
+  }

@@ -1,0 +1,148 @@
+.admin-settings {
+  display: flex;
+  flex-direction: row;
+  height: 88vh;
+}
+
+.sidebar {
+  width: 16rem;
+  background-color: #e5e7e8;
+  color:var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+.sidebar h2 {
+  color: var(--dark);
+  font-size: 0.85rem;
+  font-weight: 400;
+  padding: 2rem 2rem 0 0;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.7rem;
+}
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  color: var(--dark);
+  padding: 0.5rem;
+}
+ .tab-active{
+  border-right: 3px solid var(--primary) !important; 
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+  color: var(--dark);
+  padding: 0.5rem;
+  border-radius: 0.312rem;
+ }
+
+.sidebar-link:hover {
+  opacity: 0.7;
+}
+
+.main-content {
+  flex: 1;
+  padding: 2rem 3rem;
+  background-color:var(--white);
+}
+
+.main-content form {
+  display: flex;
+  gap: 1.9rem;
+}
+
+.content-change input {
+  width: 40%;
+}
+.main-content input:focus {
+  border: 1px solid var(--primary);
+}
+
+.main-content button:hover {
+  opacity: 0.85;
+}
+.delete-account{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.delete-account h2 {
+  margin-top: 0;
+}
+
+.delete-account p {
+  font-size: 0.8rem;
+  color: var(--secondary);
+}
+
+.delete-account button {
+  background-color: var(--danger);
+  color:var(--white);
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+.delete-account button:hover {
+  opacity: 0.85;
+}
+
+.content-change {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.change-admin {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+.change-admin button {
+  background-color: var(--primary);
+  color:var(--white);
+  padding: 0.625rem 1.25rem;
+  border: none;
+  border-radius: 0.3125rem;
+  cursor: pointer;
+  align-self: flex-start;
+}
+.change-admin input {
+  padding: 0.625rem;
+  border: 1px solid #ddd;
+  border-radius: 0.3125rem;
+  outline: none;
+  appearance: none;
+  transition: 0.3s ease-in-out;
+}
+.content-edit {
+  width: 60%;
+
+}
+.change-admin label{
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.85rem;
+}
+.divider{
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--darkGrey);
+}
+/* .MuiSelect-outlined{
+  outline:1px solid var(--primary)!important;
+} */

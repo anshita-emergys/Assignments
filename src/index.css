@@ -1,0 +1,68 @@
+:root {
+  --dark : #17153B;
+  --primary: #6472ff;
+  --blue: #0918d2;
+  --darkPurple: #a6adff;
+  --lavender: #dadeff;
+  --lightPurple:#f0f3ff;
+  --secondary: #7e7e7e;
+  --darkGrey : #d4d4d4;
+  --lightGrey : #f4f6f8;
+  --danger:#A31D1D;
+  --redbg: #f7d2c4;
+  --green: #388e3c;
+  --greenbg: #c8e6c9;
+  --yellow: #fc9403;
+  --yellowbg: #fff6d6;
+  --white : #fff;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --background: rgb(254,248,250);
+  --toastify-icon-color-success: var(--primary);
+  --background: linear-gradient(34deg, rgba(254,248,250,1) 10%, rgba(234,247,247,1) 49%, rgba(250,248,251,1) 90%);
+}
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Ubuntu", serif;
+}
+
+
+body{
+  background-color: var(--lightPurple);
+}
+#root{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+h1,h2,h3,h4{
+  color: var(--dark);
+}
+.Toastify__progress-bar--success {
+  background-color: var(--primary);
+}
+.Toastify__toast-icon{
+  accent-color: var(--primary);
+}
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  background-color: inherit;
+}
+::-webkit-scrollbar {
+  width: 0.4rem;
+}
+::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: #e7e7e7;
+  border: 1px solid #cacaca;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: var(--dark);
+}
+.skeleton{
+  flex: 1;
+}

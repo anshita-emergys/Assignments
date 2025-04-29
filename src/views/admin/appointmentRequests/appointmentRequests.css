@@ -1,0 +1,137 @@
+.appointments-list{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 59vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  gap: 1rem;
+  justify-content: space-between;
+
+}
+/* .appointments-list::-webkit-scrollbar {
+  width: 0.4rem;
+}
+.appointments-list::-webkit-scrollbar-track {
+  border-radius: 8px;
+  background-color: #e7e7e7;
+  border: 1px solid #cacaca;
+}
+.appointments-list::-webkit-scrollbar-thumb {
+  border-radius: 8px;
+  background-color: var(--dark);
+} */
+
+.appointment-card {
+  width: 100%;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 0.312rem;
+  height: min-content;
+}
+.card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 1px solid var(--darkGrey);
+  padding: 1rem;
+  border-radius: 0.312rem;
+  height: 15rem;
+}
+ 
+.card-content .row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+ 
+.label {
+  font-size: 0.85rem;
+  color: #777;
+  margin-bottom: 0.2rem;
+}
+ 
+.value {
+  font-size: 1rem;
+  font-weight: 500;
+}
+ 
+.appointment-actions {
+  display: flex;
+  align-items: center;
+  flex: 1 1 0;
+  gap: 2rem;
+  /* justify-content: space-between; */
+}
+ 
+.appointment-actions  .btn {
+  flex: 1 1 0;
+  padding: 0.4rem;
+  font-size: 0.9rem;
+  border-radius: 0.312rem;
+  border: 1px solid var(--darkGrey);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-approve{
+  background-color: var(--lavender);
+  color: var(--primary);
+}
+.btn-approve:disabled{
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.btn-cancel{
+  background: none;
+}
+.btn-complete{
+  background: var(--greenbg);
+  color: var(--green);
+}
+
+.doctor-row{
+  border-top: 1px solid var(--darkGrey);
+  padding-top: 0.7rem;
+}
+.request-container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.MuiBox-root{
+   width: 89.5%;
+  background-color:var(--white);
+  display:flex;
+   flex-direction:column;
+   gap:1rem;
+   padding: 2rem 2rem 0.5rem;
+   margin: 1rem;
+   border-radius: 0.312rem;
+}
+
+.css-1gsv261{
+  padding: 0rem;
+  margin: 0;
+  font-size: 0.2rem;
+
+}
+.Mui-selected{
+  color: var(--primary)  !important;
+}
+.css-1qltlow-MuiTabs-indicator{
+  background-color: var(--primary) !important;
+}
+
+.cancelled-card{
+  border: 0.1rem solid var(--danger);
+}
+.cancel-confirmation{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

@@ -1,0 +1,212 @@
+.multi_step {
+  flex: 1;
+  display: flex;
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: 0.8rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+.input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 1.5rem 2rem;
+}
+.patient_form input:not([type="checkbox"]):not([type="radio"]) {
+  width: 100%;
+  padding: 0.59rem 0.65rem;
+  border-radius: 0.35rem;
+  border: none;
+  outline: 1px solid var(--darkGrey);
+  transition: 0.3s ease-in-out;
+}
+.patient_form input:not([type="checkbox"]):not([type="radio"]):focus{
+  outline: 1px solid var(--primary);
+}
+.patient_form input[type='date']{
+  font-size: 0.75rem;
+  font-family: inherit;
+}
+.patient_form {
+  position: relative;
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.patient_form label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--secondary);
+}
+.patient_form textarea {
+  width: 100%;
+  padding: 0.59rem 0.65rem;
+  border-radius: 0.35rem;
+  border: none;
+  outline: 1px solid var(--darkGrey);
+  height: 5rem;
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.check label {
+  margin: 0;
+}
+.check input {
+  accent-color: var(--primary);
+}
+.size {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.multi-step-container {
+  display: flex;
+  gap: 2rem;
+  margin: 1rem 4rem;
+  background: var(--lightPurple);
+  border-radius: 1rem;
+}
+
+.step-sidebar {
+  width: 16rem;
+  height: 29rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 2rem;
+  background: var(--white);
+  border-radius: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  color: #000;
+}
+
+.step-sidebar h2 {
+  font-size: 1rem;
+}
+.subheading {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--secondary);
+}
+
+.step-sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.step-sidebar li {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  color: var(--secondary);
+  transition: color 0.3s;
+}
+
+.step-sidebar li.active {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.step-icon {
+  width: 2rem;
+  height: 2rem;
+  background: var(--dark);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-right: 1rem;
+  transition: background 0.3s;
+}
+
+.step-sidebar li.active .step-icon {
+  background: var(--primary);
+  color: var(--white);
+}
+.condition-cont{
+  grid-column: 1 / 4;
+  display: flex;
+  gap: 1rem;
+}
+.conditions {
+  grid-column: 1 / 4;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+}
+.check-cont{
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.radio-group {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+.document-grid {
+  /* display: grid;
+  grid-template-columns: repeat(4,160px);
+  justify-content: space-between; */
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.document-grid img {
+  width: 5rem;
+  height: 2.5rem;
+}
+.document-item {
+  display: grid;
+  grid-template-columns: 140px 160px 5rem 5rem;
+  /* justify-content: space-between; */
+  gap: 2rem;
+  align-items: center;
+}
+.document-item input{
+  width: auto !important;
+}
+.document-item button{
+  background-color: var(--dark);
+  color: var(--white);
+  padding: 0.5rem 0.7rem;
+  border-radius: 0.312rem;
+  margin-top: 0.5rem;
+  border: none;
+  appearance: none;
+  cursor: pointer;
+}
+.document-item button:disabled{
+  opacity: 0.6;
+}
+.document-item button:disabled:hover{
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.document-item button:hover{
+  opacity: 0.8;
+}
+.disease-container .input_label{
+  width: 50% !important;
+}
+.css-t3ipsp-control{
+  border: 1px solid var(--primary);
+  box-shadow: none;
+}
+.css-t3ipsp-control:hover{
+  border-color: var(--primary);
+}

@@ -1,0 +1,52 @@
+.appointment-table {
+  background-color: var(--white);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  /* padding: 0.8rem; */
+ padding:  0.8rem 1rem 1rem;
+  border-radius: 0.312rem;
+}
+.appointment-table-container {
+  height: 56vh;
+  overflow-y: auto;
+}
+
+.appointment-table-item {
+  display: grid;
+  grid-template-columns: 6.5rem 7.5rem 5rem;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--darkGrey);
+  padding: 0.65rem 0.2rem;
+  font-size: 0.85rem;
+  transition: 0.3s ease-in-out;
+  word-wrap: break-word;
+}
+.appointment-table-item:hover{
+  background-color: var(--lightGrey);
+}
+.status-tag {
+  padding: 0.2rem;
+  border-radius: 0.312rem;
+  text-align: center;
+  width: 5rem;
+}
+
+.status-pending {
+  color: var(--yellow);
+}
+
+.status-scheduled {
+  color: var(--primary);
+}
+
+.status-completed {
+  color: var(--green);
+}
+
+.status-cancelled {
+  color: var(--danger);
+}

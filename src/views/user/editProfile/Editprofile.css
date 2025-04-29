@@ -1,0 +1,115 @@
+.edit-profile-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 2rem;
+  background-color: var(--white);
+  border-radius: 0.8rem;
+  height: 88.1vh;
+}
+
+.edit-profile-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+.edit-dialog{
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+.update-btn {
+  align-self: center;
+  background-color: var(--primary);
+  color: var(--white);
+  padding: 0.5rem 1.65rem;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.update-btn:hover {
+  opacity: 0.85;
+}
+
+.delete-btn {
+  background-color: var(--danger);
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.delete-btn:hover {
+  opacity: 0.85;
+}
+
+.edit-profile-container img {
+  width: 30rem;
+}
+
+.edit-profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.edit-profile-dlt {
+  border-top: 1px solid var(--darkGrey);
+  padding: 1rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+}
+.edit-profile-dlt h1,.edit-dialog h1 {
+  align-self: flex-start;
+  font-size: 1.3rem;
+}
+
+.edit-profile-dlt p , .edit-dialog p{
+  font-size: 0.8rem;
+  color: var(--secondary);
+}
+.time-picker-container {
+  display: flex;
+  gap: 1.5rem;
+}
+.time-picker-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--secondary);
+}
+.time-picker-input .MuiInputBase-root.Mui-focused {
+  border-color: var(--primary);
+}
+.edit-dialog{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.time-picker-container{
+  justify-content:space-between;
+}
+.time-picker-input{
+  outline: none;
+  border: 1px solid var(--darkGrey);
+  border-radius:0.312rem;
+  transition: 0.3s ease-in-out;
+  padding:0.5rem;
+  width:100%;
+}
+.time-picker-input:focus{
+  border: 1px solid var(--primary);
+}
+.time-picker-field{
+  display:flex;
+  flex-direction:column;
+  gap:0.2rem;
+  width:10rem;
+}
