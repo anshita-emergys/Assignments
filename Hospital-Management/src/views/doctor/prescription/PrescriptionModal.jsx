@@ -30,7 +30,7 @@ const PrescriptionModal = ({ open, onClose, onSubmit, appointment_id }) => {
   const [medicines, setMedicines] = useState([createNewMedicine()]);
   const [expandedIndex, setExpandedIndex] = useState(0);
   const [courseDuration, setCourseDuration] = useState("");
-  const [error,setError] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleChange = (index, field, value) => {
     const updated = [...medicines];
@@ -40,9 +40,23 @@ const PrescriptionModal = ({ open, onClose, onSubmit, appointment_id }) => {
 
   const handleTimingChange = (index, type, timeOfDay) => {
     const updated = [...medicines];
-    updated[index].timing[type][timeOfDay] =
-      !updated[index].timing[type][timeOfDay];
+    updated[index].timing[type][timeOfDay] = true;
+    const otherType = type === "beforeMeal" ? "afterMeal" : "beforeMeal";
+    updated[index].timing[otherType][timeOfDay] = false;
     setMedicines(updated);
+  };
+
+  const isFormValid = () => {
+    if (!courseDuration) return false;
+    for (const med of medicines) {
+      if (!med.name || !med.dosage) return false;
+      for (const time of ["morning", "afternoon", "evening"]) {
+        if (!med.timing.beforeMeal[time] && !med.timing.afterMeal[time]) {
+          return false;
+        }
+      }
+    }
+    return true;
   };
 
   const addMedicine = () => {
@@ -66,7 +80,9 @@ const PrescriptionModal = ({ open, onClose, onSubmit, appointment_id }) => {
   };
 
   const handleSubmit = () => {
-    const isValid = medicines.every((m) => m.name && m.dosage && courseDuration);
+    const isValid = medicines.every(
+      (m) => m.name && m.dosage && courseDuration
+    );
     if (!isValid) {
       setError("Please fill out all the details of medicine.");
       return;
@@ -106,7 +122,8 @@ const PrescriptionModal = ({ open, onClose, onSubmit, appointment_id }) => {
                 aria-controls={`panel-${index}-content`}
                 id={`panel-${index}-header`}
               >
-                <strong className="medicine-error">Medicine {index + 1}</strong> {error &&  <p className="auth-error">{error}</p> }
+                <strong className="medicine-error">Medicine {index + 1}</strong>{" "}
+                {error && <p className="auth-error">{error}</p>}
               </AccordionSummary>
               <AccordionDetails>
                 <div className="medicine-card">
@@ -137,18 +154,13 @@ const PrescriptionModal = ({ open, onClose, onSubmit, appointment_id }) => {
                         handleChange(index, "dosage", e.target.value)
                       }
                     />
-                  </div>
-                  <div className="course-duration-input">
-                    <label htmlFor="courseDuration">
-                      Course Duration (days):{" "}
-                    </label>
                     <input
                       type="number"
                       id="courseDuration"
                       min="1"
                       value={courseDuration}
                       onChange={(e) => setCourseDuration(e.target.value)}
-                      placeholder="Enter course duration"
+                      placeholder="Course (in days)"
                     />
                   </div>
                   <div className="medicine-checks">
@@ -214,7 +226,9 @@ const PrescriptionModal = ({ open, onClose, onSubmit, appointment_id }) => {
         <Button onClick={onClose} color="#7e7e7e">
           Cancel
         </Button>
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={handleSubmit} disabled={!isFormValid()}>
+          Submit
+        </Button>
       </DialogActions>
     </Dialog>
   );

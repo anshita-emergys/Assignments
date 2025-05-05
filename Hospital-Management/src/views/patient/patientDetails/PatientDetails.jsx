@@ -3,12 +3,25 @@ import { useParams } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { FaEdit } from "react-icons/fa";
 import "./patientDetails.css";
-import '../multiStep/multiStep.css'
+import "../multiStep/multiStep.css";
 import { fetchAdminPatients } from "@redux/slices/adminSlice";
 import { fetchPatients, updateDocument } from "@redux/thunks/patient";
 import PersonalInfo from "../multiStep/PersonalInfo";
 import FamilyInfo from "../multiStep/FamilyInfo";
 import DiseaseInfo from "../multiStep/Disease";
+
+const getFileName = (name) => {
+  switch (name) {
+    case "aadhaarBack":
+      return "Aadhaar Front";
+    case "aadhaarFront":
+      return "Aadhaar Back";
+    case "insuranceBack":
+      return "Insurance Back";
+    case "insuranceFront":
+      return "Insurance Front";
+  }
+};
 
 const PatientDetails = () => {
   const { id } = useParams();
@@ -22,48 +35,50 @@ const PatientDetails = () => {
   const [editFormData, setEditFormData] = useState({});
   const [patient, setPatient] = useState(
     adminPatients.find((p) => p.patient_id === parseInt(id)) ||
-    userPatients.find((p) => p.patient_id === parseInt(id)) ||
-    null
+      userPatients.find((p) => p.patient_id === parseInt(id)) ||
+      null
   );
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [selectedDocument, setSelectedDocument] = useState({});
 
-  useEffect(() => {
-    const fetchPatientData = async () => {
-      try {
-        const existingPatient = 
-          adminPatients.find(p => p.patient_id === parseInt(id)) || 
-          userPatients.find(p => p.patient_id === parseInt(id));
-        
-        if (existingPatient) {
-          setPatient(existingPatient);
-          return;
-        }
-
-        if (adminMessage) {
-          await dispatch(fetchAdminPatients(pagination.currentPage));
-        } else {
-          await dispatch(fetchPatients());
-        }
-        const foundPatient = 
-          adminPatients.find(p => p.patient_id === parseInt(id)) || 
-          userPatients.find(p => p.patient_id === parseInt(id));
-        
-        if (foundPatient) {
-          setPatient(foundPatient);
-        }
-      } catch (error) {
-        console.error('Error fetching patient data:', error);
+  const fetchPatientData = async (force=false) => {
+    try {
+      const existingPatient =
+        adminPatients.find((p) => p.patient_id === parseInt(id)) ||
+        userPatients.find((p) => p.patient_id === parseInt(id));
+        console.log('force',force);
+      if (!force && existingPatient) {
+        setPatient(existingPatient);
+        return;
       }
-    };
+      
+      
+      if (adminMessage) {
+        await dispatch(fetchAdminPatients(pagination.currentPage));
+      } else {
+        await dispatch(fetchPatients());
+      }
 
+    } catch (error) {
+      console.error("Error fetching patient data:", error);
+    }
+  };
+
+  useEffect(() => {
     fetchPatientData();
+    const foundPatient =
+        adminPatients.find((p) => p.patient_id === parseInt(id)) ||
+        userPatients.find((p) => p.patient_id === parseInt(id));
+
+      if (foundPatient) {
+        setPatient(foundPatient);
+      }
   }, [id, dispatch, adminMessage, pagination.currentPage]);
 
   useEffect(() => {
-    const updatedPatient = 
-      adminPatients.find(p => p.patient_id === parseInt(id)) || 
-      userPatients.find(p => p.patient_id === parseInt(id)) || 
+    const updatedPatient =
+      adminPatients.find((p) => p.patient_id === parseInt(id)) ||
+      userPatients.find((p) => p.patient_id === parseInt(id)) ||
       null;
     setPatient(updatedPatient);
   }, [adminPatients, userPatients, id]);
@@ -125,13 +140,16 @@ const PatientDetails = () => {
               <strong>{patient?.date_of_birth.split("T")[0]}</strong>
             </p>
             <p className="detail-item">
-              Weight: <strong>{patient?.weight}</strong>
+              Weight: <strong>{patient?.weight} kg</strong>
             </p>
             <p className="detail-item">
-              Height: <strong>{patient?.height}</strong>
+              Height: <strong>{(() => {
+                const h = Number(patient?.height);
+                return isNaN(h) ? patient?.height : h.toFixed(2);
+              })()} ft</strong>
             </p>
             <p className="detail-item">
-              BMI: <strong>{patient?.bmi}</strong>
+              BMI: <strong>{patient?.bmi.toFixed(2)}</strong>
             </p>
             <p className="detail-item">
               Age: <strong>{patient?.age}</strong>
@@ -156,7 +174,8 @@ const PatientDetails = () => {
               Father's Age: <strong>{patient?.father_age}</strong>
             </p>
             <p className="detail-item">
-              Father's Country: <strong>{patient?.father_country_origin}</strong>
+              Father's Country:{" "}
+              <strong>{patient?.father_country_origin}</strong>
             </p>
             <p className="detail-item">
               Mother's Name: <strong>{patient?.mother_name}</strong>
@@ -165,7 +184,8 @@ const PatientDetails = () => {
               Mother's Age: <strong>{patient?.mother_age}</strong>
             </p>
             <p className="detail-item">
-              Mother's Country: <strong>{patient?.mother_country_origin}</strong>
+              Mother's Country:{" "}
+              <strong>{patient?.mother_country_origin}</strong>
             </p>
           </div>
           <div className="section">
@@ -196,12 +216,16 @@ const PatientDetails = () => {
                 className="details-document-item"
               >
                 <p>
-                  {document.document_type}{" "}
+                  {getFileName(document.document_type)}{" "}
                   <button onClick={() => handleUpdateDocument(document)}>
                     <FaEdit />
                   </button>
                 </p>
-                <img  src={`${import.meta.env.VITE_DOCUMENT_URL}${document.document_url}`} />
+                <img
+                  src={`${import.meta.env.VITE_DOCUMENT_URL}${
+                    document.document_url
+                  }`}
+                />
                 {showUpdateForm &&
                   selectedDocument.document_type &&
                   selectedDocument.document_type === document.document_type && (
@@ -227,13 +251,25 @@ const PatientDetails = () => {
               &times;
             </button>
             {editFormData.infoType === "personalInfo" && (
-              <PersonalInfo id={id} setShowEditForm={setShowEditForm} />
+              <PersonalInfo
+                id={id}
+                setShowEditForm={setShowEditForm}
+                onUpdate={fetchPatientData}
+              />
             )}
             {editFormData.infoType === "familyInfo" && (
-              <FamilyInfo id={id} setShowEditForm={setShowEditForm} />
+              <FamilyInfo
+                id={id}
+                setShowEditForm={setShowEditForm}
+                onUpdate={fetchPatientData}
+              />
             )}
             {editFormData.infoType === "diseaseInfo" && (
-              <DiseaseInfo id={id} setShowEditForm={setShowEditForm} />
+              <DiseaseInfo
+                id={id}
+                setShowEditForm={setShowEditForm}
+                onUpdate={fetchPatientData}
+              />
             )}
           </div>
         </div>

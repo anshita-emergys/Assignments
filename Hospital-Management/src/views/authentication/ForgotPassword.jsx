@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router";
+import { useNavigate} from "react-router";
 import { forgotPassword, resetPassword } from "@redux/thunks/user";
 import bcrypt from "bcryptjs";
+import { EmailContext } from "../../pages/authPage/AuthPage";
 
 const ForgotPassword = () => {
-  const [email, setEmail] = useState("");
+  const { email, setEmail } = useContext(EmailContext);
+  const [localEmail, setLocalEmail] = useState(email || "");
   const [otp, setOtp] = useState("");
   const [otpFields, setOtpFields] = useState([]);
   const [password, setPassword] = useState("");
@@ -18,7 +20,14 @@ const ForgotPassword = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (email) {
+      setLocalEmail(email);
+    }
+  }, [email]);
+
   const handleEmailChange = (e) => {
+    setLocalEmail(e.target.value);
     setEmail(e.target.value);
   };
 
@@ -42,7 +51,7 @@ const ForgotPassword = () => {
 
   const sendOtp = async () => {
     try {
-      const hashOtp = await dispatch(forgotPassword(email)).unwrap();
+      const hashOtp = await dispatch(forgotPassword(localEmail)).unwrap();
       setIsOtpSent(true);
       setOtpFields(new Array(6).fill(""));
       setServerOtp(hashOtp);
@@ -76,7 +85,7 @@ const ForgotPassword = () => {
     }
 
     try {
-      await dispatch(resetPassword({ email, newPassword: password })).unwrap();
+      await dispatch(resetPassword({ email: localEmail, newPassword: password })).unwrap();
       toast.success("Password reset successfully");
       navigate("/login");
       setError(null);
@@ -101,7 +110,7 @@ const ForgotPassword = () => {
             </label>
             <input
               type="email"
-              value={email}
+              value={localEmail}
               onChange={handleEmailChange}
               className="forgot-inputs"
             />

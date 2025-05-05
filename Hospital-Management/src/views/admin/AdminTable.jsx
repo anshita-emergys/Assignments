@@ -12,6 +12,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
+import { toast } from "react-toastify";
 
 const AdminTable = () => {
   const dispatch = useDispatch();
@@ -54,7 +55,14 @@ const AdminTable = () => {
 
   const confirmDelete = async () => {
     try {
-      await dispatch(deletePatientData(patientIdToDelete));
+      const response = await dispatch(deletePatientData(patientIdToDelete));
+      console.log(response);
+      
+      if(response.payload){
+        toast.error(response.payload);
+        setOpenDialog(false);
+        return;
+      }
       dispatch(fetchAdminPatients(pagination.currentPage));
       fetchAgeGroups();
       setOpenDialog(false);

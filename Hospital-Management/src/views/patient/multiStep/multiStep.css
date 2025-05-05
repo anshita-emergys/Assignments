@@ -18,6 +18,7 @@
   border: none;
   outline: 1px solid var(--darkGrey);
   transition: 0.3s ease-in-out;
+  font-size: 0.85rem;
 }
 .patient_form input:not([type="checkbox"]):not([type="radio"]):focus{
   outline: 1px solid var(--primary);
@@ -37,7 +38,7 @@
   display: flex;
   justify-content: space-between;
   margin-bottom: 0.4rem;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   font-weight: 500;
   color: var(--secondary);
 }
@@ -91,7 +92,7 @@
   font-size: 1rem;
 }
 .subheading {
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   font-weight: 500;
   color: var(--secondary);
 }
@@ -156,7 +157,7 @@
 .radio-group {
   display: flex;
   gap: 1rem;
-  align-items: flex-start;
+  align-items: center;
 }
 .document-grid {
   /* display: grid;
@@ -172,7 +173,7 @@
 }
 .document-item {
   display: grid;
-  grid-template-columns: 140px 160px 5rem 5rem;
+  grid-template-columns: 200px 1fr 5rem 5rem;
   /* justify-content: space-between; */
   gap: 2rem;
   align-items: center;
@@ -185,7 +186,6 @@
   color: var(--white);
   padding: 0.5rem 0.7rem;
   border-radius: 0.312rem;
-  margin-top: 0.5rem;
   border: none;
   appearance: none;
   cursor: pointer;
@@ -201,6 +201,7 @@
   opacity: 0.8;
 }
 .disease-container .input_label{
+  font-size: 0.85rem;
   width: 50% !important;
 }
 .css-t3ipsp-control{
@@ -209,4 +210,7 @@
 }
 .css-t3ipsp-control:hover{
   border-color: var(--primary);
+}
+.radio-group label{
+  margin-bottom: 0 !important;
 }

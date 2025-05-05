@@ -7,7 +7,6 @@ import { ToastContainer } from "react-toastify";
 import { PersistGate } from "redux-persist/integration/react";
 import { setAuthToken } from "./api/axios";
 
-// Initialize auth token when store is ready
 const onBeforeLift = () => {
   const { token } = store.getState().auth;
   setAuthToken(token);

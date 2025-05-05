@@ -135,3 +135,18 @@
   flex-direction: column;
   gap: 1rem;
 }
+.cancel-confirmation label{
+  font-size: 0.85rem;
+  color: var(--secondary);
+}
+.cancel-confirmation input{
+  padding: 0.5rem;
+  outline: none;
+  border: 1px solid var(--darkGrey);
+  border-radius: 0.5rem;
+  transition: 0.3s ease-in-out;
+}
+.cancel-confirmation input:focus{
+  border: 1px solid var(--primary);
+
+}

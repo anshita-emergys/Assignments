@@ -16,8 +16,8 @@
     color: #ffffffb4;
     transition: 0.3s ease-in;
   }
-  .active{
-    color: var(--white);
+  .nav-link.active{
+    color: var(--white) !important;
   }
   .nav-icon{
     font-size: 1rem;

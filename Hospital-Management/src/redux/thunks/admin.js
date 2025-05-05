@@ -3,11 +3,11 @@ import { instance } from "@src/api/axios";
 
 export const addAdmin = createAsyncThunk(
   "admin/addAdmin",
-  async (addEmail, { rejectWithValue }) => {
+  async (data, { rejectWithValue }) => {
     try {
-      const response = await instance.put("/user/addAdmin", {
-        email: addEmail,
-      });
+      const response = await instance.post("/admin/addAdmin",
+        data,
+      );
       return response.data;
     } catch (error) {
       console.error(error);
@@ -145,7 +145,7 @@ export const changeStatus = createAsyncThunk(
     }
   }
 );
-// http://localhost:4000/api/admin/cancelledAppointment?appointment_id=1
+
 export const cancelAppointment = createAsyncThunk(
   "admin/cancelAppointment",
   async ({appointmentId,reason} ,{ rejectWithValue }) => {

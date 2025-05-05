@@ -16,6 +16,7 @@ const DiseaseInfo = ({
   id,
   setFormData,
   setShowEditForm,
+  onUpdate,
 }) => {
   const patientId = useSelector((state) => state.patient.patientId);
   const dispatch = useDispatch();
@@ -61,11 +62,20 @@ const DiseaseInfo = ({
 
       if (id) {
         result = await dispatch(updateDiseaseInfo(updatePayload));
+        if (onUpdate) {
+          await onUpdate(true);
+        }
         setShowEditForm(false);
       } else if (formData && Object.keys(formData).length !== 0) {
         result = await dispatch(updateDiseaseInfo(updatePayload));
+        if (onUpdate) {
+          await onUpdate(true);
+        }
       } else {
         result = await dispatch(addDiseaseInfo(addPayload));
+        if (onUpdate) {
+          await onUpdate(true);
+        }
       }
 
       if (result?.error) {
@@ -149,6 +159,7 @@ DiseaseInfo.propTypes = {
   id: PropTypes.string,
   setFormData: PropTypes.func,
   setShowEditForm: PropTypes.func,
+  onUpdate: PropTypes.func,
 };
 
 export default DiseaseInfo;

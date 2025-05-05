@@ -55,9 +55,7 @@ const DocumentForm = ({ onNext, onBack, formData }) => {
   const onSubmitDocumentData = (data) => {
     if (
       uploadedFiles.aadhaarFront &&
-      uploadedFiles.aadhaarBack &&
-      uploadedFiles.insuranceFront &&
-      uploadedFiles.insuranceBack
+      uploadedFiles.aadhaarBack
     ) {
       onNext({ documentInfo: data });
     } else {
@@ -77,6 +75,7 @@ const DocumentForm = ({ onNext, onBack, formData }) => {
           <label>Aadhaar Card Front *</label>
           <input
             type="file"
+            accept="image/png, image/jpg, image/jpeg"
             {...register("aadhaarFront", {
               required: true,
             })}
@@ -99,6 +98,7 @@ const DocumentForm = ({ onNext, onBack, formData }) => {
           <label>Aadhaar Card Back *</label>
           <input
             type="file"
+            accept="image/png, image/jpg, image/jpeg"
             {...register("aadhaarBack", {
               required: true,
             })}
@@ -119,15 +119,13 @@ const DocumentForm = ({ onNext, onBack, formData }) => {
           </button>
         </div>
         <div className="document-item">
-          <label>Medical Insurance Front *</label>
+          <label>Medical Insurance Front</label>
           <input
             type="file"
-            {...register("insuranceFront", {
-              required: true,
-            })}
+            accept="image/png, image/jpg, image/jpeg"
+            {...register("insuranceFront")}
             onChange={(e) => handleFileChange(e)}
             disabled={uploadedFiles.insuranceFront}
-            required
           />
           {filePreviews.insuranceFront && (
             <img src={filePreviews.insuranceFront} alt="Insurance front" />
@@ -142,15 +140,13 @@ const DocumentForm = ({ onNext, onBack, formData }) => {
           </button>
         </div>
         <div className="document-item">
-          <label>Medical Insurance Back *</label>
+          <label>Medical Insurance Back</label>
           <input
             type="file"
-            {...register("insuranceBack", {
-              required: true,
-            })}
+            accept="image/png, image/jpg, image/jpeg"
+            {...register("insuranceBack")}
             onChange={(e) => handleFileChange(e)}
             disabled={uploadedFiles.insuranceBack}
-            required
           />
           {filePreviews.insuranceBack && (
             <img src={filePreviews.insuranceBack} alt="Insurance back" />

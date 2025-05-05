@@ -1,8 +1,14 @@
 import { createBrowserRouter, Navigate } from "react-router";
 import { lazy, Suspense } from "react";
 import ProtectedRoutes from "./ProtectedRoutes";
-import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+
+const delayForSkeleton = (promise, time = 1500) => {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(promise), time);
+  });
+};
+
 const DoctorTable = lazy(() =>
   import("@src/views/doctor/doctorView/DoctorTable")
 );
@@ -12,7 +18,7 @@ const AppointmentRequests = lazy(() =>
 const DoctorDashboard = lazy(() => import("@pages/doctorPage/DoctorDashboard"));
 const Login = lazy(() => import("@views/authentication/Login"));
 const Signup = lazy(() => import("@views/authentication/Signup"));
-const AuthPage = lazy(() => import("@pages/authPage/AuthPage"));
+const AuthPage = lazy(() => delayForSkeleton(import("@pages/authPage/AuthPage")));
 const ForgotPassword = lazy(() =>
   import("@views/Authentication/ForgotPassword")
 );
@@ -33,10 +39,8 @@ const Appointment = lazy(() =>
   import("@views/patient/appointment/Appointment")
 );
 const DoctorList = lazy(() => import("@views/admin/doctorList/DoctorList"));
+import LoadingFallback from '@components/loading/LoadingFallback';
 
-const LoadingFallback = () => {
-  return <div> loading..?  <Skeleton count={3} height={100} containerClassName='skeleton' /> </div>;
-};
 
 const router = createBrowserRouter([
   {

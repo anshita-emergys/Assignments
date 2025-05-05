@@ -13,6 +13,8 @@ import "./doctorList.style.css";
 import { DialogContentText } from "@mui/material";
 import EmptyState from "@src/components/emptyState/EmptyState";
 import noRecords from "@src/assets/no-records.png";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const defaultDoctor = {
   specialization: "",
@@ -61,19 +63,30 @@ const DoctorList = () => {
   }, [dispatch]);
 
   const onSubmit = async (data) => {
-    try {
-      const saveData = {
-        ...data,
-        doctorInTime: data.doctorInTime + ":00",
-        doctorOutTime: data.doctorOutTime + ":00",
-      };
-      await dispatch(addDoctor(saveData));
-      await loadDoctors();
-      setAddDialogOpen(false);
-      reset(defaultDoctor);
-    } catch (error) {
-      console.error(error.response?.data?.message || error.message);
+    if (data.user_password) {
+      data.user_password = btoa(data.user_password);
     }
+    const saveData = {
+      ...data,
+      doctorInTime: data.doctorInTime + ":00",
+      doctorOutTime: data.doctorOutTime + ":00"
+    };
+    setAddDialogOpen(false);
+    toast.promise(
+      dispatch(addDoctor(saveData)),
+      {
+        pending: "Adding doctor...",
+        success: "Doctor added successfully!",
+        error: {
+          render({ data }) {
+            return data.response?.data?.message || data.message || "Failed to add doctor";
+          }
+        }
+      }
+    ).then(() => {
+      loadDoctors();
+      reset(defaultDoctor);
+    });
   };
 
   const handleDeleteClick = (doctorId) => {
@@ -104,6 +117,7 @@ const DoctorList = () => {
         <div className="doctor-table-header">
           <h3 className="table-title">Doctor List</h3>
           <button
+          type="button"
             className="add-doctor-button"
             onClick={() => {
               setAddDialogOpen(true);
@@ -182,6 +196,7 @@ const DoctorList = () => {
                         trigger={trigger}
                       />
                     </div>
+                    <div className="fullname">
             <InputField
               label="Specialization"
               id="specialization"
@@ -192,32 +207,6 @@ const DoctorList = () => {
               maxLength={50}
             />
             <InputField
-                        label="Email"
-                        id="email"
-                        type="text"
-                        maxLength={50}
-                        register={register}
-                        errors={errors}
-                        trigger={trigger}
-                      />
-            {/* <div className="input-field">
-              <label htmlFor="email">Email</label>
-              <select
-                id="email"
-                {...register("email", { required: "Email is required" })}
-                value={selectedEmail}
-                onChange={(e) => setSelectedEmail(e.target.value)} 
-              >
-                <option value="" disabled>Select Email</option>
-                {emailList?.map((email) => (
-                  <option key={email.id} value={email.id}>
-                    {email.email} 
-                  </option>
-                ))}
-              </select>
-              {errors.email && <p className="error-message">{errors.email.message}</p>}
-            </div> */}
-             <InputField
                       label="Mobile Number"
                       id="contact_number"
                       type="text"
@@ -226,6 +215,18 @@ const DoctorList = () => {
                       errors={errors}
                       trigger={trigger}
                     />
+                    </div>
+            <InputField
+                        label="Email"
+                        id="email"
+                        type="text"
+                        maxLength={50}
+                        register={register}
+                        errors={errors}
+                        trigger={trigger}
+                      />
+            
+             
           <InputField
             label="Password"
             id="user_password"

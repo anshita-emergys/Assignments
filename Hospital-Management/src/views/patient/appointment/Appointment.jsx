@@ -13,6 +13,7 @@ import { fetchDoctors } from "@src/redux/thunks/admin";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import bookingImg from "@src/assets/booking-success.png";
+import { FaSearch } from "react-icons/fa";
 
 function Appointment() {
   const dispatch = useDispatch();
@@ -22,12 +23,15 @@ function Appointment() {
   const [doctors, setDoctors] = useState([]);
   const [doctorsLoading, setDoctorsLoading] = useState(false);
   const [timeSlots, setTimeSlots] = useState(null);
+  const [availableSlots, setAvailableSlots] = useState([]);
+  const [tentativeSlots, setTentativeSlots] = useState([]);
   const [slotsLoading, setSlotsLoading] = useState(false);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [selectedDate, setSelectedDate] = useState(null);
   const [selectedSlot, setSelectedSlot] = useState(null);
   const [bookingStatus, setBookingStatus] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const settings = {
     dots: false,
@@ -60,6 +64,9 @@ function Appointment() {
 
   useEffect(() => {
     if (selectedDoctor && selectedDate) {
+      console.log("selected date", selectedDate);
+
+      setSelectedSlot(null);
       const loadTimeSlots = async () => {
         setSlotsLoading(true);
         try {
@@ -83,6 +90,25 @@ function Appointment() {
       loadTimeSlots();
     }
   }, [selectedDoctor, selectedDate]);
+
+  useEffect(() => {
+    if (timeSlots) {
+      const allSlots = generateTimeSlots(
+        timeSlots.doctorInTime,
+        timeSlots.doctorOutTime,
+        timeSlots.scheduleSlots,
+        timeSlots.pendingSlots
+      );
+
+      const available = allSlots.filter(
+        (slot) => slot.type === "available" || slot.type === "scheduled"
+      );
+      const tentative = allSlots.filter((slot) => slot.type === "pending");
+
+      setAvailableSlots(available);
+      setTentativeSlots(tentative);
+    }
+  }, [timeSlots]);
 
   const handleBookAppointment = async () => {
     try {
@@ -115,38 +141,83 @@ function Appointment() {
     }
   };
 
-  const generateTimeSlots = (startTime, endTime, scheduleSlot = [],pendingSlot = []) => {
-    const bookedSlots = scheduleSlot.concat(pendingSlot);
-    const slots = [];
-    const start = new Date(`1970-01-01T${startTime}`);
-    const end = new Date(`1970-01-01T${endTime}`);
-    const bookedTimes = bookedSlots?.map((slot) => slot.substring(0, 5)) || [];
-    for (
-      let time = new Date(start);
-      time <= end;
-      time.setMinutes(time.getMinutes() + 30)
-    ) {
-      const timeString = time.toTimeString().substring(0, 5);
-      slots.push({
-        time: timeString,
-        available: !bookedTimes.includes(timeString),
-      });
+const generateTimeSlots = (
+  startTime,
+  endTime,
+  scheduleSlots = [],
+  pendingSlots = []
+) => {
+  const slots = [];
+  const start = new Date(`1970-01-01T${startTime}`);
+  const end = new Date(`1970-01-01T${endTime}`);
+
+  const scheduled = scheduleSlots.map((s) => s.substring(0, 5));
+  const pending = pendingSlots.map((p) => p.substring(0, 5));
+
+  for (
+    let time = new Date(start);
+    time <= end;
+    time.setMinutes(time.getMinutes() + 30)
+  ) {
+    const timeStr = time.toTimeString().substring(0, 5);
+
+    let type = "available";
+    if (scheduled.includes(timeStr)) {
+      type = "scheduled";
+    } else if (pending.includes(timeStr)) {
+      type = "pending";
     }
-    return slots;
-  };
+
+    slots.push({
+      time: timeStr,
+      type,
+    });
+  }
+
+  return slots;
+};
 
   return (
     <div className="appointment-container">
       <h2>Make an Appointment</h2>
 
       <div className="appointment-slider">
-        <h3>Choose a doctor</h3>
+        <div className="slider-search">
+          <h3>Choose a doctor</h3>
+          <input
+            type="text"
+            placeholder="Search doctors by name or specialization"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+          <FaSearch
+            style={{
+              fontSize: "0.8rem",
+              position: "absolute",
+              left: "42%",
+              top: "25%",
+              color: "#888",
+              pointerEvents: "none",
+            }}
+          />
+        </div>
+
         {doctorsLoading ? (
           <p>Loading doctors...</p>
         ) : (
           <Slider {...settings}>
-            {doctors &&
-              doctors?.map((doctor) => (
+            {doctors
+              ?.filter(
+                (doctor) =>
+                  doctor.name
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                  doctor.specialization
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+              )
+              .map((doctor) => (
                 <label
                   htmlFor={`doctor-${doctor.doctor_id}`}
                   key={doctor.doctor_id}
@@ -168,7 +239,7 @@ function Appointment() {
                     id={`doctor-${doctor.doctor_id}`}
                     name="doctor-selection"
                     className="doctor-radio"
-                    checked={selectedDoctor?.id === doctor.doctor_id}
+                    checked={selectedDoctor?.doctor_id === doctor.doctor_id}
                     onChange={() => setSelectedDoctor(doctor)}
                   />
                 </label>
@@ -203,31 +274,46 @@ function Appointment() {
                 Doctor Availability: {timeSlots.doctorInTime} -{" "}
                 {timeSlots.doctorOutTime}
               </p>
-              <div className="slot-buttons">
-                {generateTimeSlots(
-                  timeSlots.doctorInTime,
-                  timeSlots.doctorOutTime,
-                  timeSlots.scheduleSlots,
-                  timeSlots.pendingSlots
-                ).map((slot) => (
-                  <button
-                    key={slot.time}
-                    className={`${slot.available ? "slotButton" : "booked"} ${
-                      selectedSlot === slot.time ? "selectedButton" : ""
-                    }`}
-                    onClick={() => slot.available && setSelectedSlot(slot.time)}
-                    disabled={!slot.available}
-                  >
-                    {slot.time}
-                  </button>
-                ))}
-              </div>
+
+              {availableSlots.length > 0 && (
+                <div className="slot-section">
+                  <div className="slot-buttons">
+                    {availableSlots.map((slot) => (
+                      <button
+                        key={slot.time}
+                        className={`${
+                          slot.type === "scheduled" ? "booked" : "slotButton"
+                        } ${selectedSlot === slot.time ? "selectedButton" : ""}`}
+                        onClick={() =>
+                          slot.type === "available" && setSelectedSlot(slot.time)
+                        }
+                        disabled={slot.type === "scheduled"}
+                      >
+                        {slot.time}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {tentativeSlots.length > 0 && (
+                <div className="slot-section">
+                  <h3>Tentative Slots</h3>
+                  <div className="slot-buttons">
+                    {tentativeSlots.map((slot) => (
+                      <button key={slot.time} className="booked" disabled>
+                        {slot.time}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {selectedSlot && (
                 <div className="booking-actions">
-                  <p>{`${selectedDate
-                    .toString()
-                    .substring(0, 16)} - ${selectedSlot}`}</p>
+                  <p>{`${selectedDate.format(
+                    "ddd MMM DD YYYY"
+                  )} - ${selectedSlot}`}</p>
                   <button
                     className="book-button"
                     onClick={handleBookAppointment}

@@ -30,7 +30,6 @@ const AppointmentRequests = () => {
   },[])
 
   const tabs = [
-    // { label: "All", filter: () => true },
     { label: "Requested", filter: (app) => app.status === "Pending" },
     { label: "Scheduled", filter: (app) => app.status === "Scheduled" },
     { label: "Completed", filter: (app) => app.status === "Completed" },

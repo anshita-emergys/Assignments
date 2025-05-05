@@ -67,36 +67,50 @@
   }
 
   .age-group-cards {
-    width: 100%;
+    background-color: var(--white);
+    width: 90%;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
     margin: 1rem 0 0;
+    padding: 1rem 0;
+    gap: 1rem;
   }
   
   .age-group-card {
-    padding: 0.8rem 1rem;
-    background-color: var(--white);
-    border: none;
-    border-radius: 0.312rem;
-    width: 12rem;
-    text-align: end
+    padding: 0rem 1rem;
+    border-right: 2px solid var(--lightPurple);
+    width: 17.1rem;
+    text-align: end;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
   }
-  
+  .person-icon{
+    font-size: 3.1rem;
+    background-color: var(--lightPurple);
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+    color: var(--primary);
+  }
   .age-group-card h2 {
-    margin-bottom: 0.5rem;
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   
   .age-group-card p {
-    font-size: 0.8rem;
-    font-weight: bold;
+    font-size: 0.75rem;
+    color: var(--secondary);
   }
   .age-group-card .card-header{
     display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     font-size: 1.5rem;
+  }
+  .age-group-card:nth-child(4){
+    border: none;
   }
   .pagination{
     position: absolute;

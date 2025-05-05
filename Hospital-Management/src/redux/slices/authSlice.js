@@ -9,23 +9,6 @@ const initialState = {
   superAdmin:null
 };
 
-// export const login = createAsyncThunk(
-//   "auth/login",
-//   async (credentials, { rejectWithValue }) => {
-//     try {
-//       const response = await instance.post("/user/login", credentials);
-//       return {
-//         token: response.data.token,
-//         adminMessage: response.data.admin_message,
-//         doctorMessage: response.data.doctor_message,
-//         superAdmin: response.data.superAdmin_message
-//       };
-//     } catch (error) {
-//       return rejectWithValue(error.response.data.message);
-//     }
-//   }
-// );
-
 const authSlice = createSlice({
   name: "auth",
   initialState,

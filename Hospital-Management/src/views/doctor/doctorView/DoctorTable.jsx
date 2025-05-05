@@ -45,26 +45,37 @@ const DoctorTable = () => {
   };
 
   const handleSubmitPrescription = async (prescriptionData) => {
-    try {
-      setLoadingMap((prev) => ({
-        ...prev,
-        [selectedAppointmentId]: true,
-      }));
-      let response;
+    setLoadingMap((prev) => ({
+      ...prev,
+      [selectedAppointmentId]: true,
+    }));
 
-      if (prescriptionData.prescription_id) {
-        response = await dispatch(
-          updatePrescription(prescriptionData)
-        ).unwrap();
-      } else {
-        response = await dispatch(addPrescription(prescriptionData)).unwrap();
+    const promise = prescriptionData.prescription_id
+      ? dispatch(updatePrescription(prescriptionData)).unwrap()
+      : dispatch(addPrescription(prescriptionData)).unwrap();
+
+    toast.promise(
+      promise,
+      {
+        pending: "Submitting prescription...",
+        success: {
+          render({ data }) {
+            setOpen(false);
+            return data.message;
+          },
+        },
+        error: {
+          render({ data }) {
+            return data.message || "Failed to submit prescription";
+          },
+        },
       }
+    );
 
-      toast.success(response.message);
-      setOpen(false);
+    try {
+      await promise;
     } catch (error) {
       console.error(error);
-      toast.error(error.message);
     } finally {
       setLoadingMap((prev) => ({
         ...prev,

@@ -3,6 +3,7 @@ export const selectStyle = {
       ...base,
       border: "1px solid var(--darkGrey)",
       padding: '0',
+      fontSize: '0.85rem',
       boxShadow: "none",
       "&:focus": {
         border: "1px solid var(--primary)",
@@ -15,6 +16,7 @@ export const selectStyle = {
       ...base,
       backgroundColor: state.isSelected ? "var(--primary)" : "var(--white)",
       color: state.isSelected ? "white" : "black",
+      fontSize: '0.85rem',
       "&:hover": {
         backgroundColor: "var(--lavender)",
         color: "black",

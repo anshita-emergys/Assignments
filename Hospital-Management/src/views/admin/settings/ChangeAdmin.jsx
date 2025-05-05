@@ -45,16 +45,29 @@ const ChangeAdmin = () => {
   }, [dispatch]);
 
   const onSubmit = async (data) => {
-    try {
-      await dispatch(addAdmin(data));
-      toast.success("Admin privileges added successfully!");
-      setAddDialogOpen(false);
-      reset();
-      const responseAdmin = await dispatch(getAdmin());
-      setAdminList(responseAdmin.payload?.data || []);
-    } catch (error) {
-      toast.error(error.response?.data?.message || "Failed to add admin");
+    if (data.user_password) {
+      data.user_password = btoa(data.user_password);
     }
+    setAddDialogOpen(false);
+    toast.promise(
+      dispatch(addAdmin(data)),
+      {
+        pending: "Adding admin privileges...",
+        success: "Admin privileges added successfully!",
+        error: {
+          render({ data }) {
+            return data?.message || "Failed to add admin";
+          },
+        },
+      }
+    ).then(async (response) => {
+      if (!response.error) {
+        
+        reset();
+        const responseAdmin = await dispatch(getAdmin());
+        setAdminList(responseAdmin.payload?.data || []);
+      }
+    });
   };
 
   const handleDeleteClick = (email) => {

@@ -16,7 +16,7 @@
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     width: 80%;
-    max-width: 550px;
+    max-width: 650px;
     position: relative;
   }
   
@@ -36,6 +36,7 @@
   }
   .edit-form-popup .patient_form{
     height: 400px;
+    width: 600px;
   }
 
   .edit-form-popup .back-btn{
@@ -132,6 +133,7 @@
 
 .document img{
   width: 10rem;
+  height: 5rem;
 }
 .details-document-item{
   display: flex;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
@@ -7,10 +7,13 @@ import { toast } from "react-toastify";
 import InputField from "@src/components/inputField/InputField";
 import { login } from "@src/redux/thunks/user";
 import { jwtDecode } from "jwt-decode";
+import { EmailContext } from "../../pages/authPage/AuthPage";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showForgot, setShowForgot] = useState(false);
+  const { email, setEmail } = useContext(EmailContext);
   const {
     register,
     handleSubmit,
@@ -24,9 +27,7 @@ const Login = () => {
         data.user_password = btoa(data.user_password);
       }
       const payload = {};
-      if (
-        /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(data.email)
-      ) {
+      if (/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(data.email)) {
         payload.email = data.email;
         payload.user_password = data.user_password;
       } else {
@@ -38,6 +39,7 @@ const Login = () => {
 
       if (response.error) {
         toast.error(response.payload);
+        setShowForgot(true);
         return;
       }
       const decodedToken = jwtDecode(response.payload.token);
@@ -70,9 +72,14 @@ const Login = () => {
         navigate("/user");
       }
       toast.success("Login Successful");
+      setShowForgot(false);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
   };
 
   return (
@@ -87,6 +94,8 @@ const Login = () => {
           register={register}
           errors={errors}
           trigger={trigger}
+          defaultValue={email}
+          onChange={handleEmailChange}
         />
         <InputField
           label="Password"
@@ -99,8 +108,8 @@ const Login = () => {
         />
         <div className="toggle">
           <Link to="/forgot-password" className="link">
-            Forgot Password?
-          </Link>{" "}
+            {showForgot ? "Forgot Password?" : "   "}
+          </Link>
         </div>
         <button type="submit">Login</button>
       </form>

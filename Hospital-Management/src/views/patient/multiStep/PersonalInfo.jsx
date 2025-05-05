@@ -1,19 +1,20 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
 import {
   getPersonalInfo,
   updatePersonalInfo,
   addPersonalInfo,
-} from "../../../redux/thunks/patient";
-import Button from "../../../components/formButton/FormButton";
+} from "@redux/thunks/patient";
+import Button from "@components/formButton/FormButton";
 import countryList from "react-select-country-list";
 import Select from "react-select";
 import moment from "moment";
-import InputField from "../../../components/inputField/InputField";
-import { setPatientId } from "../../../redux/slices/patientsSlice";
-import { selectStyle } from "../../../utils/selectStyle";
+import InputField from "@components/inputField/InputField";
+import { setPatientId } from "@redux/slices/patientsSlice";
+import { selectStyle } from "@src/utils/selectStyle";
 import PropTypes from "prop-types";
+import isEqual from 'lodash/isEqual';
 
 const PersonalInfo = ({
   onNext,
@@ -21,10 +22,12 @@ const PersonalInfo = ({
   setFormData,
   id,
   setShowEditForm,
+  onUpdate,
 }) => {
   const maxDate = moment().format("YYYY-MM-DD");
   const patientId = useSelector((state) => state.patient.patientId);
   const dispatch = useDispatch();
+  const initialDataRef = useRef(null);
 
   const {
     register,
@@ -54,10 +57,11 @@ const PersonalInfo = ({
           console.error(result.error);
           return;
         }
-        const formattedDate = moment(result.payload.data[0].date).format(
-          "YYYY-MM-DD"
-        );
-        reset({ ...result.payload.data[0], date_of_birth: formattedDate });
+        const formattedDate = moment(result.payload.data[0].date_of_birth).format("YYYY-MM-DD");
+        const resetData = { ...result.payload.data[0], date_of_birth: formattedDate };
+        
+        reset(resetData);
+        initialDataRef.current = resetData;
         setFormData({ ...formData, personalInfo: result.payload.data[0] });
       }
     };
@@ -66,14 +70,26 @@ const PersonalInfo = ({
 
   const onSubmit = async (data) => {
     try {
+      if (initialDataRef.current && isEqual(data, initialDataRef.current)) {
+        setShowEditForm && setShowEditForm(false);
+        onNext({ personalInfo: data });
+        return;
+      }
+
       let result;
       let updatePayload = { ...data, patient_id: patientId };
       if (id) {
         updatePayload = { ...data, patient_id: id };
         result = await dispatch(updatePersonalInfo(updatePayload));
-        setShowEditForm(false);
+        if (onUpdate) {
+          await onUpdate(true);
+        }
+        setShowEditForm && setShowEditForm(false);
       } else if (formData && Object.keys(formData).length !== 0) {
         result = await dispatch(updatePersonalInfo(updatePayload));
+        if (onUpdate) {
+          await onUpdate(true);
+        }
       } else {
         result = await dispatch(addPersonalInfo(data));
         if (result.error) {
@@ -82,6 +98,9 @@ const PersonalInfo = ({
         }
         dispatch(setPatientId(result.payload.data.patient_id));
         localStorage.setItem("patientId", result.payload.data.patient_id);
+        if (onUpdate) {
+          await onUpdate(true);
+        }
       }
       if (result.error) {
         console.error(result.error);
@@ -190,18 +209,18 @@ const PersonalInfo = ({
             Do you have any of the following medical conditions?
           </p>
           <div className="check-cont">
-          <div className="input_label check">
-            <label>Diabetic</label>
-            <input type="checkbox" {...register("is_diabetic")} />
-          </div>
-          <div className="input_label check">
-            <label>Cardiac</label>
-            <input type="checkbox" {...register("cardiac_issue")} />
-          </div>
-          <div className="input_label check">
-            <label>Blood Pressure</label>
-            <input type="checkbox" {...register("blood_pressure")} />
-          </div>
+            <div className="input_label check">
+              <label>Diabetic</label>
+              <input type="checkbox" {...register("is_diabetic")} />
+            </div>
+            <div className="input_label check">
+              <label>Cardiac</label>
+              <input type="checkbox" {...register("cardiac_issue")} />
+            </div>
+            <div className="input_label check">
+              <label>Blood Pressure</label>
+              <input type="checkbox" {...register("blood_pressure")} />
+            </div>
           </div>
         </div>
       </div>
@@ -213,11 +232,11 @@ const PersonalInfo = ({
 
 PersonalInfo.propTypes = {
   onNext: PropTypes.func,
-  onBack: PropTypes.func,
   formData: PropTypes.object,
   id: PropTypes.string,
   setFormData: PropTypes.func,
   setShowEditForm: PropTypes.func,
+  onUpdate: PropTypes.func,
 };
 
 export default PersonalInfo;

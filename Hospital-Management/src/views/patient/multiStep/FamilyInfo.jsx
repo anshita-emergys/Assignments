@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -12,6 +12,7 @@ import countryList from "react-select-country-list";
 import InputField from "../../../components/inputField/InputField";
 import PropTypes from "prop-types";
 import { selectStyle } from "../../../utils/selectStyle";
+import isEqual from 'lodash/isEqual';
 
 const FamilyInfo = ({
   onNext,
@@ -20,9 +21,11 @@ const FamilyInfo = ({
   setFormData,
   id,
   setShowEditForm,
+  onUpdate,
 }) => {
   const { patientId } = useSelector((state) => state.patient);
   const dispatch = useDispatch();
+   const initialDataRef = useRef(null);
 
   const {
     register,
@@ -48,7 +51,9 @@ const FamilyInfo = ({
       const fetchId = id || patientId;
       dispatch(getFamilyInfo(fetchId)).then((response) => {
         if (response.payload) {
-          reset(response.payload.data[0]);
+          const resetData = response.payload.data[0];
+          reset(resetData);
+          initialDataRef.current = resetData;
           setFormData({ ...formData, familyInfo: response.payload.data[0] });
         }
       });
@@ -57,17 +62,36 @@ const FamilyInfo = ({
 
   const onSubmit = async (data) => {
     try {
+
+      if (initialDataRef.current && isEqual(data, initialDataRef.current)) {
+        if (onUpdate) {
+          await onUpdate();
+        }
+        setShowEditForm && setShowEditForm(false);
+        onNext({ familyInfo: data });
+        return;
+      }
+
       const addPayload = { familyDetails: { ...data, patient_id: patientId } };
       let updatePayload = { ...data, patient_id: patientId || id };
 
       let result;
       if (id) {
         result = await dispatch(updateFamilyInfo(updatePayload));
+        if (onUpdate) {
+          await onUpdate(true);
+        }
         setShowEditForm(false);
       } else if (formData && Object.keys(formData).length > 0) {
         result = await dispatch(updateFamilyInfo(updatePayload));
+        if (onUpdate) {
+          await onUpdate(true);
+        }
       } else {
         result = await dispatch(addFamilyInfo(addPayload));
+        if (onUpdate) {
+          await onUpdate(true);
+        }
       }
 
       if (result.error) {
